@@ -1,5 +1,6 @@
 import express from 'express'
 import { BookingRoute } from './booking.route'
+import { OperationRoute } from './operation.route'
 
 const router = express.Router()
 
@@ -7,6 +8,11 @@ const router = express.Router()
  * Booking APIs
  */
 router.use('/bookings', BookingRoute)
+
+/**
+ * Operation APIs
+ */
+router.use('/operation', OperationRoute)
 
 /**
  * Root

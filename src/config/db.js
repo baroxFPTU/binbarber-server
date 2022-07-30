@@ -8,13 +8,14 @@ export const connectDB = async () => {
     useUnifiedTopology: true,
     useNewUrlParser: true
   })
+
   await client.connect()
 
   dbInstance = client.db(env.DATABASE_NAME)
 }
 
 // getDB
-export const getDB = async () => {
+export const getDB = () => {
   if (!dbInstance) throw Error('Database is still not connect')
   return dbInstance
 }

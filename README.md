@@ -52,12 +52,14 @@ Root
 /api/v1/
 
 Booking
-GET /working-time (Get list of time working)
-
 GET /booking (Get list of bookings at all time)
+[
+	{
+
+	}
+]
 
 POST /booking/:date (Add new booking)
-
 GET /booking/:date (Get list of bookings follow date)
 - example: /booking/25-12-2022
 
@@ -67,7 +69,8 @@ DELETE /booking/:date/:id (delete specific booking)
 
 Services
 GET /services (Get list of services)
-GET /services/time-working
+GET /working-time (get list available time in days)
+     send date object, service check is
 
 ```
 
@@ -84,3 +87,6 @@ createAt: 16343246353 (28-07-2022)
    - routes/name.route.js, using _router.route('/abc')_ used to config specific route and METHOD(GET, POST,...) go from root.
 2. Config babel
    - remove **_"type":"module"_** in package.json after config babel
+3. Config mongodb
+   - connect to mongodb with **_MongoClient_** class. Return a object with **connect** method
+   - getDB function do not **async/await** function
