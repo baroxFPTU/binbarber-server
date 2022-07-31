@@ -16,9 +16,8 @@ const getAllWorkingDates = async (req, res) => {
 
 const addWorkingDate = async (req, res) => {
   const newWorkingDate = req.body
-  console.log('new working date: ', newWorkingDate)
   try {
-    const response = await OperationService.addWorkingDate(newWorkingDate)
+    await OperationService.addWorkingDate(newWorkingDate)
     res.status(HTTP_STATUS_CODE.OK).json({
       message: 'Add successfully'
     })
@@ -29,7 +28,23 @@ const addWorkingDate = async (req, res) => {
   }
 }
 
+const getWorkingDate = async (req, res) => {
+  try {
+    const { date } = req.params
+    const workingDate = await OperationService.getWorkingDate(date)
+
+    res.status(HTTP_STATUS_CODE.OK).json({
+      data: workingDate
+    })
+  } catch (error) {
+    res.status(HTTP_STATUS_CODE.INTERNAL_SERVER).json({
+      error: error.message
+    })
+  }
+}
+
 export const OperationController = {
   getAllWorkingDates,
-  addWorkingDate
+  addWorkingDate,
+  getWorkingDate
 }
