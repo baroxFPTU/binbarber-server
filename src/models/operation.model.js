@@ -1,10 +1,14 @@
 import Joi from 'joi'
+import moment from 'moment'
 import { getDB } from '../config/db'
+
+const workingDateCollectionName = 'working-date'
 
 const workingDateSchema = Joi.object({
   date_label: Joi.string().required(),
-  createdAt: Joi.date().default(Date.now()),
-  availableAt: Joi.array()
+  availableAt: Joi.date(),
+  createdAt: Joi.date().default(moment(Date.now()).toDate()),
+  working_times: Joi.array()
     .items(
       Joi.object({
         hour: Joi.number().min(0).max(24).required(),
@@ -21,7 +25,19 @@ const validateSchema = async (workingDate) => {
 
 const getAllWorkingDates = async () => {
   try {
-    const response = await getDB().collection('working-time').find({}).toArray()
+    const response = await getDB().collection(workingDateCollectionName).find({}).toArray()
+    return response
+  } catch (error) {
+    throw Error(error)
+  }
+}
+
+const getWorkingDate = async (date) => {
+  try {
+    const response = await getDB().collection(workingDateCollectionName).findOne({
+      availableAt: date
+    })
+
     return response
   } catch (error) {
     throw Error(error)
@@ -37,8 +53,9 @@ const addWorkingDate = async (newWorkingDate) => {
     }
     const options = { upsert: true }
 
-    const response = await getDB().collection('working-time').updateOne(query, update, options)
-    console.log('response at model ', response)
+    const response = await getDB()
+      .collection(workingDateCollectionName)
+      .updateOne(query, update, options)
 
     return response
   } catch (err) {
@@ -48,5 +65,6 @@ const addWorkingDate = async (newWorkingDate) => {
 
 export const OperationModel = {
   getAllWorkingDates,
+  getWorkingDate,
   addWorkingDate
 }

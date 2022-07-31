@@ -14,7 +14,10 @@ connectDB()
 const bootServer = () => {
   const app = express()
 
-  app.use(cors())
+  app.use(cors({
+	origin: 'http://localhost:3000',
+	optionSuccessStatus: 200
+  }))
   app.use(helmet())
   app.use(express.json())
   app.use(

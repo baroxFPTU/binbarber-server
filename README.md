@@ -6,7 +6,15 @@
 
 - Connect DB (mongodb)
 - Init data
+
+### 2022 07 29
 - Connect to FrontEnd
+	+ setup axios
+	+ write call api functions
+	+ set up redux, redux saga
+	+ evaluate use state | effect | redux | redux saga
+- Create services route -> render to frontend
+
 
 ## Steps
 
