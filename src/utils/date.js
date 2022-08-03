@@ -1,7 +1,8 @@
 import moment from 'moment'
+import { WORKING_TIME_SAMPLE } from './constant'
 
-const isValidDate = (date) => {
-  const m = moment(date)
+const isValidDate = (stringDate) => {
+  const m = moment(stringDate)
   return m.isValid()
 }
 
@@ -13,8 +14,17 @@ const getStartOfDay = (date) => {
   return moment(date).startOf('day').toDate()
 }
 
+const generateWorkingDate = (date) => {
+  return {
+    date_label: date,
+    working_times: [...WORKING_TIME_SAMPLE],
+    availableAt: formatStringToDate(date)
+  }
+}
+
 export const dateUtils = {
   isValidDate,
+  getStartOfDay,
   formatStringToDate,
-  getStartOfDay
+  generateWorkingDate
 }

@@ -8,6 +8,8 @@ router
   .get(OperationController.getAllWorkingDates)
   .post(OperationController.addWorkingDate)
 
+router.route('/working-date/generate').get(OperationController.generateWorkingDate)
+
 router.route('/working-date/:date').get(OperationController.getWorkingDate)
 
 export const OperationRoute = router
