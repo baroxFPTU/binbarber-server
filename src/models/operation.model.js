@@ -1,12 +1,12 @@
 import Joi from 'joi'
 import moment from 'moment'
-import { getDB } from '../config/db'
+import { getDB } from '~/config/db'
 
 const workingDateCollectionName = 'working-date'
 
 const workingDateSchema = Joi.object({
   date_label: Joi.string().required(),
-  availableAt: Joi.date(),
+  availableAt: Joi.date().min('now').required(),
   createdAt: Joi.date().default(moment(Date.now()).toDate()),
   working_times: Joi.array()
     .items(
@@ -34,6 +34,7 @@ const getAllWorkingDates = async () => {
 
 const getWorkingDate = async (date) => {
   try {
+    console.log(date)
     const response = await getDB().collection(workingDateCollectionName).findOne({
       availableAt: date
     })
@@ -57,7 +58,11 @@ const addWorkingDate = async (newWorkingDate) => {
       .collection(workingDateCollectionName)
       .updateOne(query, update, options)
 
-    return response
+    const workingDate = await getDB().collection(workingDateCollectionName).findOne({
+      _id: response.upsertedId
+    })
+
+    return workingDate
   } catch (err) {
     throw Error(err)
   }

@@ -32,7 +32,20 @@ const getWorkingDate = async (req, res) => {
   try {
     const { date } = req.params
     const workingDate = await OperationService.getWorkingDate(date)
+    res.status(HTTP_STATUS_CODE.OK).json({
+      data: workingDate
+    })
+  } catch (error) {
+    res.status(HTTP_STATUS_CODE.INTERNAL_SERVER).json({
+      error: error.message
+    })
+  }
+}
 
+const generateWorkingDate = async (req, res) => {
+  try {
+    const stringDate = req.query.date
+    const workingDate = await OperationService.generateWorkingDate(stringDate)
     res.status(HTTP_STATUS_CODE.OK).json({
       data: workingDate
     })
@@ -46,5 +59,6 @@ const getWorkingDate = async (req, res) => {
 export const OperationController = {
   getAllWorkingDates,
   addWorkingDate,
-  getWorkingDate
+  getWorkingDate,
+  generateWorkingDate
 }
