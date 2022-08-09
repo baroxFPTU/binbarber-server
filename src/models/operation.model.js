@@ -6,7 +6,7 @@ const workingDateCollectionName = 'working-date'
 
 const workingDateSchema = Joi.object({
   date_label: Joi.string().required(),
-  availableAt: Joi.date().min('now').required(),
+  availableAt: Joi.date().iso().min(moment().startOf('day').toDate()).required(), // Use moment to correct the format of now to ISO.
   createdAt: Joi.date().default(moment(Date.now()).toDate()),
   working_times: Joi.array()
     .items(

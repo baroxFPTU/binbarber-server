@@ -7,7 +7,7 @@ const isValidDate = (stringDate) => {
 }
 
 const formatStringToDate = (date) => {
-  return moment(date).toDate()
+  return moment(date.trim()).local().toDate()
 }
 
 const getStartOfDay = (date) => {

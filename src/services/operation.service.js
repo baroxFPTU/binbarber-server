@@ -36,6 +36,7 @@ const getWorkingDate = async (stringDate) => {
 const generateWorkingDate = async (stringDate) => {
   try {
     const newWorkingDate = dateUtils.generateWorkingDate(stringDate)
+    console.log(newWorkingDate)
     const workingDate = await OperationModel.addWorkingDate(newWorkingDate)
     if (!workingDate) throw new Error('Working date is exit')
 
