@@ -14,6 +14,27 @@ const getAll = async (req, res) => {
   }
 }
 
+const create = async (req, res) => {
+  try {
+    const newBooking = req.body
+    const createdBooking = await BookingService.create(newBooking)
+    res.status(HTTP_STATUS_CODE.OK).json({
+      data: createdBooking
+    })
+  } catch (error) {
+    if (error.errors) {
+      return res.status(HTTP_STATUS_CODE.INTERNAL_SERVER).json({
+        errors: [...error.errors]
+      })
+    }
+
+    res.status(HTTP_STATUS_CODE.INTERNAL_SERVER).json({
+      error: error.message
+    })
+  }
+}
+
 export const BookingController = {
-  getAll
+  getAll,
+  create
 }
