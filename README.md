@@ -8,13 +8,13 @@
 - Init data
 
 ### 2022 07 29
-- Connect to FrontEnd
-	+ setup axios
-	+ write call api functions
-	+ set up redux, redux saga
-	+ evaluate use state | effect | redux | redux saga
-- Create services route -> render to frontend
 
+- Connect to FrontEnd
+  - setup axios
+  - write call api functions
+  - set up redux, redux saga
+  - evaluate use state | effect | redux | redux saga
+- Create services route -> render to frontend
 
 ## Steps
 
@@ -67,8 +67,17 @@ GET /booking (Get list of bookings at all time)
 	}
 ]
 
-POST /booking/:date (Add new booking)
-GET /booking/:date (Get list of bookings follow date)
+POST /booking/ (Add new booking)
+validate booking
+	=> controller
+		=> services (
+			+ get hour, minute, date
+		)
+			=> model validate
+				=> add to db
+					=> set hour, minute to not free anymore
+
+GET /booking/:date (Get list of bookings by date)
 - example: /booking/25-12-2022
 
 GET /booking/:date/:id (Get booking by code )
@@ -87,6 +96,9 @@ GET /working-time (get list available time in days)
 id:dsf3e3e29w2wi92e2ie
 createAt: 16343246353 (28-07-2022)
 }
+
+## Logics
+- userId: slug-of-name.phoneNumber.
 
 ## What I've learn
 

@@ -1,26 +1,28 @@
-import Joi from 'joi'
 import moment from 'moment'
+import * as yup from 'yup'
 import { getDB } from '~/config/db'
 
 const workingDateCollectionName = 'working-date'
+const DATE_OBJ_NOW = moment(Date.now()).toDate()
+const START_OF_TODAY = moment().startOf('day').toDate()
 
-const workingDateSchema = Joi.object({
-  date_label: Joi.string().required(),
-  availableAt: Joi.date().iso().min(moment().startOf('day').toDate()).required(), // Use moment to correct the format of now to ISO.
-  createdAt: Joi.date().default(moment(Date.now()).toDate()),
-  working_times: Joi.array()
-    .items(
-      Joi.object({
-        hour: Joi.number().min(0).max(24).required(),
-        minute: Joi.number().min(0).max(59).required(),
-        isFree: Joi.boolean().default(true)
-      })
-    )
-    .default([])
+const workingDateSchema = yup.object().shape({
+  date_label: yup.string('Date is not valid').required('Date label is required'),
+  availableAt: yup
+    .date('availableAt must be a date object')
+    .min(START_OF_TODAY, 'availableAt value must be after today')
+    .required(),
+  createAt: yup.date().default(DATE_OBJ_NOW),
+  working_times: yup.array().of(
+    yup.object().shape({
+      hour: yup.number().min(0).max(24),
+      minute: yup.number().min(0).max(59)
+    })
+  )
 })
 
 const validateSchema = async (workingDate) => {
-  return await workingDateSchema.validateAsync(workingDate, { abortEarly: false })
+  return await workingDateSchema.validate(workingDate, { abortEarly: false })
 }
 
 const getAllWorkingDates = async () => {
@@ -34,7 +36,6 @@ const getAllWorkingDates = async () => {
 
 const getWorkingDate = async (date) => {
   try {
-    console.log(date)
     const response = await getDB().collection(workingDateCollectionName).findOne({
       availableAt: date
     })
