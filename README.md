@@ -97,6 +97,9 @@ id:dsf3e3e29w2wi92e2ie
 createAt: 16343246353 (28-07-2022)
 }
 
+## Logics
+- userId: slug-of-name.phoneNumber.
+
 ## What I've learn
 
 1. Config routes

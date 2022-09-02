@@ -23,6 +23,7 @@
     "helmet": "^5.1.1",
     "moment": "^2.29.4",
     "mongodb": "^4.8.1",
+    "slugify": "^1.6.5",
     "yup": "^0.32.11"
   },
   "devDependencies": {

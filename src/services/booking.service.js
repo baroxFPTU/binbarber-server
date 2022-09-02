@@ -12,10 +12,10 @@ const getAll = async () => {
 
 const create = async (newBooking) => {
   try {
-    /*Just for test */
-    newBooking.bookedAt = moment('2022-08-16').toDate()
-    // newBooking.createdAt = moment().toDate()
-    newBooking.expiredAt = moment(newBooking.bookedAt).add(3, 'd').toDate()
+    if (typeof newBooking.bookedAt === 'number') {
+      newBooking.bookedAt = moment(newBooking.bookedAt)
+    }
+    newBooking.expiredAt = moment(newBooking.bookedAt).add(3, 'd')
 
     const createdBooking = await BookingModel.create(newBooking)
     return createdBooking

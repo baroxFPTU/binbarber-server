@@ -17,9 +17,11 @@ const getAll = async (req, res) => {
 const create = async (req, res) => {
   try {
     const newBooking = req.body
-    const createdBooking = await BookingService.create(newBooking)
+    const booking = await BookingService.create(newBooking)
     res.status(HTTP_STATUS_CODE.OK).json({
-      data: createdBooking
+      data: {
+        bookingId: booking.insertedId
+      }
     })
   } catch (error) {
     if (error.errors) {
