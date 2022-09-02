@@ -1,3 +1,4 @@
 node_modules
 BABEL_CONFIG.md
 ESLINT_CONFIG.md
+.env
