@@ -1,3 +1,0 @@
-{
-  "rewrites": [{ "source": "build/src", "destination": "build/src/index.js" }]
-}

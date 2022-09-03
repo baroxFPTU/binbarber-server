@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
+import path from 'path'
 
 import { env } from '~/config/environment.js'
 import { apiV1 } from '~/routes/v1'
@@ -23,12 +24,17 @@ const bootServer = () => {
     })
   )
   app.use(helmet())
+  app.use(express.static('public'))
   app.use(express.json())
   app.use(
     express.urlencoded({
       extended: false
     })
   )
+
+  app.get('/', (req, res) => {
+    res.sendFile('index.html', { root: path.join(__dirname, 'public') })
+  })
 
   app.use(
     '/v1',
@@ -43,5 +49,5 @@ const bootServer = () => {
     console.log(`Server running at http://${env.APP_HOST}:${env.APP_PORT}/`)
   })
 }
-
+console.log(app)
 module.exports = app

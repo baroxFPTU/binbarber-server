@@ -8,6 +8,8 @@ var _cors = _interopRequireDefault(require("cors"));
 
 var _helmet = _interopRequireDefault(require("helmet"));
 
+var _path = _interopRequireDefault(require("path"));
+
 var _environment = require("./config/environment.js");
 
 var _v = require("./routes/v1");
@@ -30,10 +32,16 @@ var bootServer = function bootServer() {
     optionSuccessStatus: 200
   }));
   app.use((0, _helmet["default"])());
+  app.use(_express["default"]["static"]('public'));
   app.use(_express["default"].json());
   app.use(_express["default"].urlencoded({
     extended: false
   }));
+  app.get('/', function (req, res) {
+    res.sendFile('index.html', {
+      root: _path["default"].join(__dirname, 'public')
+    });
+  });
   app.use('/v1', function (req, res, next) {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     next();
@@ -43,4 +51,5 @@ var bootServer = function bootServer() {
   });
 };
 
+console.log(app);
 module.exports = app;
