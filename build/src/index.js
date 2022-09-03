@@ -21,9 +21,10 @@ var _db = require("./config/db");
 })["catch"](function (err) {
   return console.log(err);
 });
+var app;
 
 var bootServer = function bootServer() {
-  var app = (0, _express["default"])();
+  app = (0, _express["default"])();
   app.use((0, _cors["default"])({
     origin: 'http://localhost:3000',
     optionSuccessStatus: 200
@@ -33,8 +34,13 @@ var bootServer = function bootServer() {
   app.use(_express["default"].urlencoded({
     extended: false
   }));
-  app.use('/v1', _v.apiV1);
+  app.use('/v1', function (req, res, next) {
+    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+    next();
+  }, _v.apiV1);
   app.listen(_environment.env.APP_PORT, _environment.env.APP_HOST, function () {
     console.log("Server running at http://".concat(_environment.env.APP_HOST, ":").concat(_environment.env.APP_PORT, "/"));
   });
 };
+
+module.exports = app;

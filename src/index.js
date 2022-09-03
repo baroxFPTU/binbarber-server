@@ -11,8 +11,10 @@ connectDB()
   .then(() => bootServer())
   .catch((err) => console.log(err))
 
+let app
+
 const bootServer = () => {
-  const app = express()
+  app = express()
 
   app.use(
     cors({
@@ -28,9 +30,18 @@ const bootServer = () => {
     })
   )
 
-  app.use('/v1', apiV1)
+  app.use(
+    '/v1',
+    (req, res, next) => {
+      res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate')
+      next()
+    },
+    apiV1
+  )
 
   app.listen(env.APP_PORT, env.APP_HOST, () => {
     console.log(`Server running at http://${env.APP_HOST}:${env.APP_PORT}/`)
   })
 }
+
+module.exports = app
