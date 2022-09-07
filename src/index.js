@@ -49,5 +49,4 @@ const bootServer = () => {
     console.log(`Server running at http://${env.APP_HOST}:${env.APP_PORT}/`)
   })
 }
-console.log(app)
 module.exports = app

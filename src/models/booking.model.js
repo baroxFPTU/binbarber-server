@@ -4,7 +4,7 @@ import { getDB } from '../config/db'
 
 const BOOKING_COLLECTION_NAME = 'booking'
 
-const serviceSchema = yup.object().shape({
+export const serviceSchema = yup.object().shape({
   id: yup.string().required(),
   name: yup.string().required(),
   description: yup.string(),
@@ -13,7 +13,7 @@ const serviceSchema = yup.object().shape({
 
 const bookingSchema = yup.object().shape({
   userId: yup.string().required(),
-  selectedServices: yup.array().of(serviceSchema),
+  selectedServices: yup.array().of(serviceSchema).min(1),
   isPaid: yup.boolean().default(false),
   appliedDiscounts: yup.array(),
   bookedAt: yup.date().required(),
