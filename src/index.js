@@ -45,8 +45,8 @@ const bootServer = () => {
     apiV1
   )
 
-  app.listen(env.APP_PORT, env.APP_HOST, () => {
-    console.log(`Server running at http://${env.APP_HOST}:${env.APP_PORT}/`)
+  app.listen(env.PORT, env.HOST, () => {
+    console.log(`Server running at http://${env.HOST}:${env.PORT}/`)
   })
 }
 module.exports = app
