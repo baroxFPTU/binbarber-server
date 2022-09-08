@@ -17,13 +17,13 @@ let app
 const bootServer = () => {
   app = express()
 
-  app.use(
-    cors({
-      origin: env.CORS_URL,
-      credentials: true,
-      optionsSuccessStatus: 200
-    })
-  )
+  // app.use(
+  //   cors({
+  //     origin: env.CORS_URL,
+  //     credentials: true,
+  //     optionsSuccessStatus: 200
+  //   })
+  // )
   app.use(helmet())
   app.use(express.static('public'))
   app.use(express.json())
