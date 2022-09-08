@@ -51,7 +51,9 @@ const bootServer = () => {
   )
 
   app.get('/', (req, res) => {
-    res.sendFile('index.html', { root: path.join(__dirname, 'public') })
+    res.json({
+      message: 'Hello World!'
+    })
   })
 
   app.use(
