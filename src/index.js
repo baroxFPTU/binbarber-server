@@ -19,7 +19,7 @@ const bootServer = () => {
 
   app.use(
     cors({
-      origin: 'http://localhost:3000',
+      origin: env.CORS_URL,
       optionSuccessStatus: 200
     })
   )
