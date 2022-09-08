@@ -3,7 +3,7 @@ import cors from 'cors'
 import helmet from 'helmet'
 import path from 'path'
 
-import { env } from '~/config/environment'
+import { env } from '~/config/environment.js'
 import { apiV1 } from '~/routes/v1'
 import { connectDB } from './config/db'
 
