@@ -21,7 +21,7 @@ const bootServer = () => {
     cors({
       origin: env.CORS_URL,
       credentials: true,
-      optionSuccessStatus: 200
+      optionsSuccessStatus: 200
     })
   )
   app.use(helmet())
