@@ -20,6 +20,7 @@ const bootServer = () => {
   app.use(
     cors({
       origin: env.CORS_URL,
+      credentials: true,
       optionSuccessStatus: 200
     })
   )
