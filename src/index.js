@@ -16,12 +16,10 @@ let app
 
 const bootServer = () => {
   app = express()
-
+  console.log(env.CORS_URL)
   app.use(
     cors({
-      origin: env.CORS_URL,
-      credentials: true,
-      optionsSuccessStatus: 200
+      origin: env.CORS_URL
     })
   )
 
