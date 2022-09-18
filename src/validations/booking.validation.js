@@ -6,8 +6,7 @@ const create = async (req, res, next) => {
   try {
     const condition = yup.object().shape({
       userId: yup.string().required(),
-      selectedServices: yup.array().of(serviceSchema).min(1),
-      bookedAt: yup.date().required()
+      selectedServices: yup.array().of(serviceSchema).min(1)
     })
 
     await condition.validate(req.body, { abortEarly: false })

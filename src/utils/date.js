@@ -14,7 +14,7 @@ const getStartOfDay = (date) => {
   return moment(date).startOf('day').toDate()
 }
 
-const generateWorkingDate = (date) => {
+const getWorkingDateSample = (date) => {
   return {
     date_label: date,
     working_times: [...WORKING_TIME_SAMPLE],
@@ -26,5 +26,5 @@ export const dateUtils = {
   isValidDate,
   getStartOfDay,
   formatStringToDate,
-  generateWorkingDate
+  getWorkingDateSample
 }

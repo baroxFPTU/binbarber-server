@@ -36,7 +36,22 @@ const create = async (req, res) => {
   }
 }
 
+const getById = async (req, res) => {
+  const { bookingId } = req.params
+  try {
+    const booking = await BookingService.getById(bookingId)
+    res.status(HTTP_STATUS_CODE.OK).json({
+      data: booking
+    })
+  } catch (error) {
+    res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({
+      errors: error.message
+    })
+  }
+}
+
 export const BookingController = {
   getAll,
-  create
+  create,
+  getById
 }

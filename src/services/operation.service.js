@@ -24,18 +24,24 @@ const getWorkingDate = async (stringDate) => {
     if (dateUtils.isValidDate(stringDate)) {
       const formatDate = dateUtils.formatStringToDate(stringDate)
       let workingDate = await OperationModel.getWorkingDate(formatDate)
+      console.log({ workingDate })
+      if (!workingDate) {
+        console.log('GENERATING...')
+        workingDate = await generateWorkingDate(stringDate)
+      }
       return workingDate
     }
 
     throw new Error(`Invalid date: ${stringDate}`)
   } catch (error) {
+    console.log(error)
     throw Error(error.message ? error.message : error)
   }
 }
 
 const generateWorkingDate = async (stringDate) => {
   try {
-    const newWorkingDate = dateUtils.generateWorkingDate(stringDate)
+    const newWorkingDate = dateUtils.getWorkingDateSample(stringDate)
 
     const workingDate = await OperationModel.addWorkingDate(newWorkingDate)
     if (!workingDate) throw new Error('Working date is exit')

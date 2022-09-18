@@ -9,4 +9,6 @@ router
   .get(BookingController.getAll)
   .post(BookingValidation.create, BookingController.create)
 
+router.route('/:bookingId').get(BookingController.getById)
+
 export const BookingRoute = router

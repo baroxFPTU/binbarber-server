@@ -6,23 +6,21 @@ import path from 'path'
 import { env } from '~/config/environment.js'
 import { apiV1 } from '~/routes/v1'
 import { connectDB } from './config/db'
+import { HTTP_STATUS_CODE } from './utils'
 
 connectDB()
   .then(() => console.log('Database is connected'))
   .then(() => bootServer())
   .catch((err) => console.log(err))
 
-let app
-
 const bootServer = () => {
-  app = express()
-  console.log(env.CORS_URL)
+  const app = express()
+
   app.use(
     cors({
       origin: env.CORS_URL
     })
   )
-
   app.use(helmet())
   app.use(express.static('public'))
   app.use(express.json())
@@ -31,12 +29,6 @@ const bootServer = () => {
       extended: false
     })
   )
-
-  app.get('/', (req, res) => {
-    res.json({
-      message: 'Hello World!'
-    })
-  })
 
   app.use(
     '/v1',
@@ -47,8 +39,13 @@ const bootServer = () => {
     apiV1
   )
 
+  app.get('*', (req, res) => {
+    res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({
+      message: 'Not found anything!'
+    })
+  })
+
   app.listen(env.PORT, env.HOST, () => {
     console.log(`Server running at http://${env.HOST}:${env.PORT}/`)
   })
 }
-module.exports = app
